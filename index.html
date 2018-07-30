@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>TODO vue</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+	<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+	<div id="app">
+		<template>
+			<div class="card">
+				<h3>TODO</h3>
+
+				<div class="row">
+					<div class="col-m-2">
+						<input class="input" v-model="todoText" placeholder="Enter todo" v-on:keyup.enter="add" />
+					</div>
+
+					<div class="col-m-2">
+						<button @click.enter="add">
+							Add
+						</button>
+
+						<button @click="deleteAll">
+							Delete all
+						</button>
+					</div>
+
+					<div class="col-m-2">
+						<input type="radio" id="one" value="date" v-model="rdTypeFilter">
+						<label for="one">Date</label>
+						<input type="radio" id="two" value="any" v-model="rdTypeFilter">
+						<label for="two">Any</label>
+					</div>
+
+					<div class="col-m-2">
+						<input v-if="typeFilter == 'date' " class="input" v-model="filterText" placeholder="Filter todo" v-mask="'##/##/####'"/>
+						<input v-if="typeFilter == 'any' " class="input" v-model="filterText" placeholder="Filter todo"/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-m-8">
+						<div class="todo-list">
+							<div v-if="todos.length">
+								<div class="item" v-for="(todo, index) in filteredTodo" :key="todo.id">
+									<span>
+										{{ index + 1 }} - {{ todo.text }}
+									</span>
+									<button class="btnDelete" @click="deleteTodo(index)">X</button>
+								</div>
+							</div>
+							<div v-else>Nenhum TODO</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
+	</div>
+
+	<script src="index.js"></script>
+</body>
